@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Book</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f1e7;
+        }
+        .logo-container {
+            text-align: left;
+            padding: 20px;
+        }
+        .logo {
+            height: 80px;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeInUp 1.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-in-out;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            color: #5d4037;
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #5d4037;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        .phone-input {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .phone-input span {
+            background: #eee;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px 0 0 6px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .phone-input input {
+            flex: 1;
+            border-radius: 0 6px 6px 0;
+            margin: 0;
+        }
+        .phone-status {
+            position: absolute;
+            right: 10px;
+            font-size: 1.2em;
+            color: green;
+        }
+        .btn {
+            background-color: #5d4037;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            font-size: 1em;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: #3e2723;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='rafly-logo.png') }}" alt="RAFLY Logo" class="logo">
+    </div>
+
+    <div class="form-container">
+        <h1>➕ Add a New Book</h1>
+
+        {% if message %}
+            <p style="color: green;"><strong>{{ message }}</strong></p>
+        {% endif %}
+
+        <form method="POST">
+            <label for="name">Your Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="title">Book Title:</label>
+            <input type="text" name="title" required>
+
+            <label for="major">Major:</label>
+            <select name="major" required>
+                <option value="" disabled selected>Select a major</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Dentistry">Dentistry</option>
+                <option value="Nursing">Nursing</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Applied Medical Sciences">Applied Medical Sciences</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Law">Law</option>
+                <option value="Business Administration">Business Administration</option>
+                <option value="Accounting">Accounting</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Interior Design">Interior Design</option>
+                <option value="English Language">English Language</option>
+            </select>
+
+            <label for="status">Book Status:</label>
+            <select name="status" required>
+                <option value="" disabled selected>Select book status</option>
+                <option value="New">New</option>
+                <option value="Used - Good Condition">Used - Good Condition</option>
+                <option value="Used - Notes Inside">Used - Notes Inside</option>
+            </select>
+
+            <label for="price">Price (SAR):</label>
+            <input type="text" name="price" required>
+
+            <label for="contact">Phone Number:</label>
+            <div class="phone-input">
+                <span>+966</span>
+                <input type="text" name="contact" id="contact" pattern="5[0-9]{8}" maxlength="9" required oninput="validatePhone()">
+                <span id="phone-status" class="phone-status"></span>
+            </div>
+
+            <button type="submit" class="btn">Save Book</button>
+        </form>
+
+        <br>
+        <a href="/" class="btn">⬅ Back to Home</a>
+    </div>
+
+    <script>
+        function validatePhone() {
+            const phoneInput = document.getElementById('contact');
+            const phoneStatus = document.getElementById('phone-status');
+            const phoneValue = phoneInput.value;
+            if (/^5\d{8}$/.test(phoneValue)) {
+                phoneStatus.textContent = '✅';
+                phoneStatus.style.color = 'green';
+            } else {
+                phoneStatus.textContent = '❌';
+                phoneStatus.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookzAI Chatbot</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f1e7;
+        }
+        .logo-container {
+            text-align: left;
+            padding: 20px;
+        }
+        .logo {
+            height: 80px;
+        }
+        .chat-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeInUp 1.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-in-out;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h2 {
+            color: #5d4037;
+            margin-bottom: 20px;
+        }
+        #chat {
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 100%;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: left;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            background-color: #5d4037;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background-color: #3e2723;
+            transform: translateY(-3px);
+        }
+        .bot {
+            color: #5d4037;
+            margin-bottom: 10px;
+        }
+        .user {
+            color: #00796b;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='rafly-logo.png') }}" alt="RAFLY Logo" class="logo">
+    </div>
+
+    <div class="chat-container">
+        <h2>🤖 Talk to Rafly Bot</h2>
+
+        <div id="chat">
+            <div class="bot"><strong>Bot:</strong> Welcome! 👋 How can I help you today?</div>
+        </div>
+
+        <form id="chatForm" onsubmit="sendMessage(); return false;">
+            <input type="text" id="userInput" placeholder="Type your message..." required>
+            <button type="submit" class="btn">Send</button>
+        </form>
+
+        <br>
+        <a href="/" class="btn">⬅ Back to Home</a>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput").value;
+            const chat = document.getElementById("chat");
+            if (input.trim() !== "") {
+                chat.innerHTML += `<div class="user"><strong>You:</strong> ${input}</div>`;
+                fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: input })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    typeBotMessage(data.reply);
+                    chat.scrollTop = chat.scrollHeight;
+                    document.getElementById("userInput").value = "";
+                });
+            }
+        }
+
+        function typeBotMessage(text) {
+            const chat = document.getElementById("chat");
+            const botMessageDiv = document.createElement('div');
+            botMessageDiv.className = 'bot';
+            botMessageDiv.innerHTML = "<strong>Bot:</strong> ";
+            chat.appendChild(botMessageDiv);
+
+            let index = 0;
+            const typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    botMessageDiv.innerHTML += text.charAt(index);
+                    index++;
+                    chat.scrollTop = chat.scrollHeight;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50); // سرعة الكتابة
+        }
+    </script>
+</body>
+</html>
+
+
