@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to BookzAI</title>
+  <title>Welcome to Rafly</title>
   <style>
     html { scroll-behavior: smooth; }
     body {
@@ -19,7 +19,7 @@
     .logo:hover { transform: scale(1.05); }
     .hero {
       height: 100vh;
-      background: url('{{ url_for('static', filename='Library.png') }}') no-repeat center center;
+      background: url('static/Library.png') no-repeat center center;
       background-size: cover;
       position: relative;
     }
@@ -175,23 +175,18 @@
 
 <body>
 
-  <!-- اللوقو -->
-  <img src="{{ url_for('static', filename='rafly-logo.png') }}" alt="RAFLY Logo" class="logo">
-
-  <!-- الخلفية -->
+  <img src="static/rafly-logo.png" alt="RAFLY Logo" class="logo">
   <div class="hero"></div>
 
   <main>
 
-    <!-- الصندوق الأول -->
     <div class="blur-box fade-in">
-      <h1> Welcome to Rafly Platform</h1>
+      <h1>Welcome to Rafly Platform</h1>
       <p>Find and add academic books at IAU!</p>
-      <a href="add_book" class="btn">➕ Add a Book</a>
-      <a href="chatbot" class="btn">🤖 Find a Book </a>
+      <a href="add_book.html" class="btn">➕ Add a Book</a>
+      <a href="chatbot.html" class="btn">🤖 Find a Book</a>
     </div>
 
-    <!-- الصندوق الثاني -->
     <div class="blur-box extra-links fade-in">
       <div class="help-text">If you need any help, feel free to contact us!</div>
 
@@ -201,87 +196,52 @@
       <a class="about-link" onclick="toggleSection('about-text')">About Us</a>
       <a class="about-link" onclick="toggleSection('faq-text')">Frequently Asked Questions</a>
 
-      <!-- About Us -->
       <div id="about-text" class="hidden">
         <h2>About Us</h2>
         <p>We are students from the College of Computer Science, and Rafly is a project we built out of a simple but powerful idea: Why let university books collect dust when they can help someone else? <br><br> Rafly is a platform that allows students to share, sell, or give away their textbooks to others who need them. <br><br> Our goal is to support education, reduce waste, and promote sustainability. <br><br> This project aligns with Saudi Arabia’s Vision 2030 by encouraging smart resource use, empowering youth, and enhancing access to educational materials.</p>
       </div>
 
-      <!-- FAQ -->
       <div id="faq-text" class="hidden">
         <h2>Frequently Asked Questions</h2>
 
-        <!-- كل الأسئلة -->
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q1')">
-            1. What is Rafly? <span id="arrow-q1" class="arrow"></span>
-          </div>
-          <p id="q1" class="faq-answer">
-            Rafly is an online platform that allows university students to exchange, buy, or give away textbooks they no longer need, making academic resources more accessible to everyone.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q1')">1. What is Rafly? <span id="arrow-q1" class="arrow"></span></div>
+          <p id="q1" class="faq-answer">Rafly is an online platform that allows university students to exchange, buy, or give away textbooks they no longer need, making academic resources more accessible to everyone.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q2')">
-            2. Do I need to create an account to use Rafly? <span id="arrow-q2" class="arrow"></span>
-          </div>
-          <p id="q2" class="faq-answer">
-            No, you can start browsing and searching for books right away without creating an account.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q2')">2. Do I need to create an account to use Rafly? <span id="arrow-q2" class="arrow"></span></div>
+          <p id="q2" class="faq-answer">No, you can start browsing and searching for books right away without creating an account.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q3')">
-            3. How can I find books I need? <span id="arrow-q3" class="arrow"></span>
-          </div>
-          <p id="q3" class="faq-answer">
-            You can search for books by title, author, subject, or condition. Rafly helps you easily find textbooks that match your needs and budget.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q3')">3. How can I find books I need? <span id="arrow-q3" class="arrow"></span></div>
+          <p id="q3" class="faq-answer">You can search for books by title, author, subject, or condition. Rafly helps you easily find textbooks that match your needs and budget.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q4')">
-            4. Is Rafly free to use? <span id="arrow-q4" class="arrow"></span>
-          </div>
-          <p id="q4" class="faq-answer">
-            Yes! You can browse books, list your books, and connect with other students at no cost.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q4')">4. Is Rafly free to use? <span id="arrow-q4" class="arrow"></span></div>
+          <p id="q4" class="faq-answer">Yes! You can browse books, list your books, and connect with other students at no cost.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q5')">
-            5. How do I contact a seller? <span id="arrow-q5" class="arrow"></span>
-          </div>
-          <p id="q5" class="faq-answer">
-            You can directly contact the seller using the contact information they provide.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q5')">5. How do I contact a seller? <span id="arrow-q5" class="arrow"></span></div>
+          <p id="q5" class="faq-answer">You can directly contact the seller using the contact information they provide.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q6')">
-            6. Can I give away my books for free? <span id="arrow-q6" class="arrow"></span>
-          </div>
-          <p id="q6" class="faq-answer">
-            Absolutely! Rafly gives you the option to offer your books for free.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q6')">6. Can I give away my books for free? <span id="arrow-q6" class="arrow"></span></div>
+          <p id="q6" class="faq-answer">Absolutely! Rafly gives you the option to offer your books for free.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q7')">
-            7. How is Rafly related to Vision 2030? <span id="arrow-q7" class="arrow"></span>
-          </div>
-          <p id="q7" class="faq-answer">
-            Rafly supports Vision 2030’s goals by promoting sustainability, reducing waste, and enhancing education.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q7')">7. How is Rafly related to Vision 2030? <span id="arrow-q7" class="arrow"></span></div>
+          <p id="q7" class="faq-answer">Rafly supports Vision 2030’s goals by promoting sustainability, reducing waste, and enhancing education.</p>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq('q8')">
-            8. What happens if there’s a dispute between me and a buyer/seller? <span id="arrow-q8" class="arrow"></span>
-          </div>
-          <p id="q8" class="faq-answer">
-            Rafly encourages open communication between users. We do not mediate transactions.
-          </p>
+          <div class="faq-question" onclick="toggleFaq('q8')">8. What happens if there’s a dispute between me and a buyer/seller? <span id="arrow-q8" class="arrow"></span></div>
+          <p id="q8" class="faq-answer">Rafly encourages open communication between users. We do not mediate transactions.</p>
         </div>
 
       </div>
@@ -290,57 +250,33 @@
 
   </main>
 
-  <!-- سكربتات الحركات -->
-  <script>
-    function toggleSection(id) {
-      var section = document.getElementById(id);
-      section.classList.toggle('hidden');
-    }
-
-    function toggleFaq(id) {
-      var answer = document.getElementById(id);
-      var arrow = document.getElementById('arrow-' + id);
-      answer.classList.toggle('show');
-      arrow.classList.toggle('rotate');
-    }
-
-    // حركة الفتح التدريجي
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = {
-      threshold: 0.2,
-      rootMargin: "0px 0px -50px 0px"
-    };
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        appearOnScroll.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
+<script>
+  function toggleSection(id) {
+    var section = document.getElementById(id);
+    section.classList.toggle('hidden');
+  }
+  function toggleFaq(id) {
+    var answer = document.getElementById(id);
+    var arrow = document.getElementById('arrow-' + id);
+    answer.classList.toggle('show');
+    arrow.classList.toggle('rotate');
+  }
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = {
+    threshold: 0.2,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      appearOnScroll.unobserve(entry.target);
     });
-  </script>
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
