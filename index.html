@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to BookzAI</title>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      background-color: #f5e9da;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .logo {
+      position: absolute; top: 20px; left: 20px;
+      height: 80px; z-index: 10;
+      transition: transform 0.5s ease;
+    }
+    .logo:hover { transform: scale(1.05); }
+    .hero {
+      height: 100vh;
+      background: url('{{ url_for('static', filename='Library.png') }}') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 200px;
+      background: linear-gradient(to bottom, rgba(245, 233, 218, 0) 0%, rgba(245, 233, 218, 0.5) 50%, #f5e9da 100%);
+    }
+    main {
+      text-align: center;
+      max-width: 800px;
+      margin: -150px auto 0 auto;
+      padding: 0 20px;
+    }
+    .blur-box {
+      background-color: rgba(255,255,255,0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin: 20px 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      transition: color 0.5s;
+    }
+    h1:hover { color: #8e5c3c; }
+    p {
+      font-size: 1.1em;
+      color: #34495e;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #8e5c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #6e3f28;
+      transform: translateY(-3px);
+    }
+    .extra-links { text-align: center; }
+    .help-text {
+      font-size: 1.2em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .icon-circle {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 45px; height: 45px;
+      margin: 0 10px;
+      background-color: #8e5c3c;
+      color: black;
+      font-size: 1.4em;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .icon-circle:hover {
+      background-color: #6e3f28;
+      transform: scale(1.1);
+    }
+    .about-link {
+      display: block;
+      margin-top: 20px;
+      color: #8e5c3c;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+    .about-link:hover { text-decoration: underline; }
+    .hidden { display: none; }
+    .faq-item {
+      text-align: left;
+      margin-top: 15px;
+    }
+    .faq-question {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #2c3e50;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .faq-answer {
+      font-size: 1em;
+      color: #34495e;
+      margin-left: 10px;
+      margin-top: 5px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-answer.show {
+      max-height: 300px;
+      padding-top: 10px;
+    }
+    .arrow {
+      border: solid #8e5c3c;
+      border-width: 0 3px 3px 0;
+      display: inline-block;
+      padding: 5px;
+      transition: transform 0.3s ease;
+      margin-left: 10px;
+      transform: rotate(0deg);
+    }
+    .rotate { transform: rotate(90deg); }
+    #about-text, #faq-text {
+      margin-top: 30px;
+      text-align: left;
+    }
+    #about-text h2, #faq-text h2 {
+      color: #2c3e50;
+    }
+    #about-text p, #faq-text p {
+      font-size: 1.1em;
+      color: #34495e;
+      line-height: 1.6;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.6em; }
+      .btn { width: 90%; }
+      .icon-circle { width: 40px; height: 40px; font-size: 1.2em; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- اللوقو -->
+  <img src="{{ url_for('static', filename='rafly-logo.png') }}" alt="RAFLY Logo" class="logo">
+
+  <!-- الخلفية -->
+  <div class="hero"></div>
+
+  <main>
+
+    <!-- الصندوق الأول -->
+    <div class="blur-box fade-in">
+      <h1> Welcome to Rafly Platform</h1>
+      <p>Find and add academic books at IAU!</p>
+      <a href="/add" class="btn">➕ Add a Book</a>
+      <a href="/chatbot" class="btn">🤖 Find a Book </a>
+    </div>
+
+    <!-- الصندوق الثاني -->
+    <div class="blur-box extra-links fade-in">
+      <div class="help-text">If you need any help, feel free to contact us!</div>
+
+      <a href="https://wa.me/966561536317" target="_blank" class="icon-circle">📞</a>
+      <a href="mailto:Rafly225577@outlook.com" class="icon-circle">✉️</a>
+
+      <a class="about-link" onclick="toggleSection('about-text')">About Us</a>
+      <a class="about-link" onclick="toggleSection('faq-text')">Frequently Asked Questions</a>
+
+      <!-- About Us -->
+      <div id="about-text" class="hidden">
+        <h2>About Us</h2>
+        <p>We are students from the College of Computer Science, and Rafly is a project we built out of a simple but powerful idea: Why let university books collect dust when they can help someone else? <br><br> Rafly is a platform that allows students to share, sell, or give away their textbooks to others who need them. <br><br> Our goal is to support education, reduce waste, and promote sustainability. <br><br> This project aligns with Saudi Arabia’s Vision 2030 by encouraging smart resource use, empowering youth, and enhancing access to educational materials.</p>
+      </div>
+
+      <!-- FAQ -->
+      <div id="faq-text" class="hidden">
+        <h2>Frequently Asked Questions</h2>
+
+        <!-- كل الأسئلة -->
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q1')">
+            1. What is Rafly? <span id="arrow-q1" class="arrow"></span>
+          </div>
+          <p id="q1" class="faq-answer">
+            Rafly is an online platform that allows university students to exchange, buy, or give away textbooks they no longer need, making academic resources more accessible to everyone.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q2')">
+            2. Do I need to create an account to use Rafly? <span id="arrow-q2" class="arrow"></span>
+          </div>
+          <p id="q2" class="faq-answer">
+            No, you can start browsing and searching for books right away without creating an account.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q3')">
+            3. How can I find books I need? <span id="arrow-q3" class="arrow"></span>
+          </div>
+          <p id="q3" class="faq-answer">
+            You can search for books by title, author, subject, or condition. Rafly helps you easily find textbooks that match your needs and budget.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q4')">
+            4. Is Rafly free to use? <span id="arrow-q4" class="arrow"></span>
+          </div>
+          <p id="q4" class="faq-answer">
+            Yes! You can browse books, list your books, and connect with other students at no cost.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q5')">
+            5. How do I contact a seller? <span id="arrow-q5" class="arrow"></span>
+          </div>
+          <p id="q5" class="faq-answer">
+            You can directly contact the seller using the contact information they provide.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q6')">
+            6. Can I give away my books for free? <span id="arrow-q6" class="arrow"></span>
+          </div>
+          <p id="q6" class="faq-answer">
+            Absolutely! Rafly gives you the option to offer your books for free.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q7')">
+            7. How is Rafly related to Vision 2030? <span id="arrow-q7" class="arrow"></span>
+          </div>
+          <p id="q7" class="faq-answer">
+            Rafly supports Vision 2030’s goals by promoting sustainability, reducing waste, and enhancing education.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq('q8')">
+            8. What happens if there’s a dispute between me and a buyer/seller? <span id="arrow-q8" class="arrow"></span>
+          </div>
+          <p id="q8" class="faq-answer">
+            Rafly encourages open communication between users. We do not mediate transactions.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- سكربتات الحركات -->
+  <script>
+    function toggleSection(id) {
+      var section = document.getElementById(id);
+      section.classList.toggle('hidden');
+    }
+
+    function toggleFaq(id) {
+      var answer = document.getElementById(id);
+      var arrow = document.getElementById('arrow-' + id);
+      answer.classList.toggle('show');
+      arrow.classList.toggle('rotate');
+    }
+
+    // حركة الفتح التدريجي
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: "0px 0px -50px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
